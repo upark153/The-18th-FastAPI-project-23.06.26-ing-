@@ -1,0 +1,1 @@
+# The-18th-FastAPI-project-23.06.26-ing-
