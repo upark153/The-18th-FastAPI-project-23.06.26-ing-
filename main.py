@@ -1,14 +1,47 @@
-from typing import Union
+from typing import Union, List
+from uuid import UUID, uuid4
 
 from fastapi import FastAPI
 from enum import Enum
 from pydantic import BaseModel
 
-app = FastAPI()
+from models import User, Gender, Role
 
-@app.get("/")
+app = FastAPI() # 인스턴스화. 
+
+db: List[User] = [
+    User(
+        # id=uuid4(), 
+        id=UUID("ff8b7797-037a-42d4-8b29-8ee51edae0b5"),
+        first_name="Uiyong", 
+        last_name="Park",
+        gender=Gender.male,
+        roles=[Role.student]
+    ),
+    User(
+        # id=uuid4(), 
+        id=UUID("ab281d2b-f251-4b0c-b9fc-70cca45c32b4"),
+        first_name="hanyong", 
+        last_name="Park",
+        gender=Gender.male,
+        roles=[Role.admin, Role.user]
+    )
+]
+
+@app.get("/") # get은 http 메서드. () 경로
 async def root():
-    return {"Hello" : "World"}
+    return {"Hello" : "World"} # 반환하는 값. JSON Object. 키 : Hello 값 : World 
+
+@app.get("/api/v1/users")
+async def fetch_users():
+    return db;
+
+
+
+
+
+
+
 # class ModelName(str, Enum):
 #     alexnet = "alexnet"
 #     resnet = "resnet"
