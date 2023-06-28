@@ -11,16 +11,16 @@ app = FastAPI() # 인스턴스화.
 
 db: List[User] = [
     User(
-        # id=uuid4(), 
-        id=UUID("ff8b7797-037a-42d4-8b29-8ee51edae0b5"),
+        # id=uuid4(), # ID 임의의 문자열 지정
+        id=UUID("ff8b7797-037a-42d4-8b29-8ee51edae0b5"), # 임의의 문자열로부터 얻은 아이디값 고정
         first_name="Uiyong", 
         last_name="Park",
         gender=Gender.male,
         roles=[Role.student]
     ),
     User(
-        # id=uuid4(), 
-        id=UUID("ab281d2b-f251-4b0c-b9fc-70cca45c32b4"),
+        # id=uuid4(), # ID 임의의 문자열 지정
+        id=UUID("ab281d2b-f251-4b0c-b9fc-70cca45c32b4"), # 임의의 문자열로부터 얻은 아이디값 고정
         first_name="hanyong", 
         last_name="Park",
         gender=Gender.male,
@@ -36,7 +36,10 @@ async def root():
 async def fetch_users():
     return db;
 
-
+@app.post("/api/v1/users")
+async def register_user(user: User):
+    db.append(user)
+    return {"id": user.id}
 
 
 
